@@ -23,3 +23,5 @@ extern void writeData(Image *image);
 
 //Frees an image and all its associated data
 extern void freeImage(Image *image);
+
+extern void writeData_in_file(Image *image);

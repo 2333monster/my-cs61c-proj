@@ -18,16 +18,35 @@
 #include <inttypes.h>
 #include "imageloader.h"
 
+
 //Determines what color the cell at the given row/col should be. This should not affect Image, and should allocate space for a new Color.
 Color *evaluateOnePixel(Image *image, int row, int col)
 {
 	//YOUR CODE HERE
+	Color **p = image->image;
+	Color * secret = (Color *)malloc(sizeof(Color));
+	p += (col + row*(image->cols));
+	int LSB = (*p)->B & 1;
+	secret->B = secret->G = secret->R = LSB*255;
+	return secret;
 }
 
 //Given an image, creates a new image extracting the LSB of the B channel.
 Image *steganography(Image *image)
 {
 	//YOUR CODE HERE
+	Image *new = (Image *)malloc(sizeof(Image));
+	new->cols = image->cols;
+	new->rows = image->rows;
+	new->image = (Color **)malloc((new->cols)*(new->rows)*sizeof(Color *));
+	Color **p = new->image;
+	for (int i = 0; i < new->rows; i++){
+		for(int j = 0; j < new->cols; j++){
+			*p = evaluateOnePixel(image,i,j);
+			p++;
+		}
+	}
+	return new;
 }
 
 /*
@@ -43,7 +62,19 @@ If the input is not correct, a malloc fails, or any other error occurs, you shou
 Otherwise, you should return from main with code 0.
 Make sure to free all memory before returning!
 */
-int main(int argc, char **argv)
+int 
+main()
 {
 	//YOUR CODE HERE
+	// if (argc != 2){
+	// 	printf("Usage: %s<colorfile>\n",argv[0] );
+	// 	return 1;
+	// }
+	char* file ="D:/fa20-proj1-starter-master/studentOutputs/secretMessage.ppm";
+	Image* img = readData(file);
+	Image* steImage = steganography(img);
+	writeData(steImage);
+	freeImage(steImage);
+	freeImage(img);
+	return 0;
 }

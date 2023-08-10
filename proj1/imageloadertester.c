@@ -26,13 +26,13 @@ void processCLI(int argc, char **argv, char **filename)
 	*filename = argv[1];
 }
 
-int main(int argc, char **argv)
-{
-	Image *image;
-	uint32_t rule;
-	char *filename;
-	processCLI(argc,argv,&filename);
-	image = readData(filename);
-	writeData(image);
-	freeImage(image);
-}
+// int main(int argc, char **argv)
+// {
+// 	Image *image;
+// 	uint32_t rule;
+// 	char *filename;
+// 	processCLI(argc,argv,&filename);
+// 	image = readData(filename);
+// 	writeData(image);
+// 	freeImage(image);
+// }
